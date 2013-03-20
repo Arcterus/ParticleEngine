@@ -1,0 +1,58 @@
+<project name="ParticleEngine" default="bundle" basedir=".">
+   <description>
+      A game engine for Particles.
+   </description>
+
+   <property name="src" location="src"/>
+   <property name="build" location="build"/>
+   <property name="bin" location="bin"/>
+
+   <condition property="isMac">
+      <os family="mac"/>
+   </condition>
+
+   <condition property="isWindows">
+      <os family="windows"/>
+   </condition>
+
+   <condition property="isUnix">
+      <and>
+         <os family="unix"/>
+         <not>
+            <os family="mac"/>
+         </not>
+      </and>
+   </condition>
+
+   <target name="init">
+      <tstamp/>
+      <mkdir dir="${build}"/>
+      <mkdir dir="${bin}"/>
+   </target>
+
+   <target name="build" depends="init" description="compiles source code">
+      <javac srcdir="${src}" destdir="${build}"/>
+   </target>
+
+   <target name="bundle" depends="build"
+      description="build destributable jar file">
+      <jar jarfile="${bin}/ParticleEngine-${DSTAMP}.jar" basedir="${build}">
+         <manifest>
+            <attribute name="Main-Class" value="Main"/>
+         </manifest>
+      </jar>
+   </target>
+
+   <target name="install" depends="bundle" description="install app to system">
+
+   </target>
+
+   <target name="uninstall" description="uninstall app from system">
+
+   </target>
+
+   <target name="clean" description="remove build files">
+      <delete dir="${bin}"/>
+      <delete dir="${build}"/>
+   </target>
+</project>
